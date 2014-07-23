@@ -232,12 +232,19 @@ function removeRow(sender) {
   var tableNumber = sender.target.tableNumber;
   var columnNumber = sender.target.columnNumber;
   var rowNumber = sender.target.rowNumber;
+  console.log(tableNumber,rowNumber);
   document.getElementById('tbody'+tableNumber).removeChild(document.getElementById('tr'+tableNumber+rowNumber));
-  for (var i = rowNumber + 1; i < data[tableNumber * 2]; i++) {
+
+  for (var i = parseInt(rowNumber)+1; i < data[tableNumber * 2]; i++) {
     document.getElementById('tr' + tableNumber + i).id = 'tr' + tableNumber + (i - 1);
     for (var j = 0; j < data[tableNumber * 2 + 1]; j++) {
+      if (j == 0) {
+        document.getElementById('delRowButton' + tableNumber + i + j).rowNumber -= 1; 
+        document.getElementById('delRowButton' + tableNumber + i + j).id = 'delRowButton' + tableNumber + (i - 1) + j;
+      } else {
+        document.getElementById('table' + tableNumber + i + j).id = 'table' + tableNumber + (i - 1) + j;
+      }
       document.getElementById('td'+tableNumber+i+j).id = 'td'+tableNumber+(i-1)+j;
-      document.getElementById('table'+tableNumber+i+j).id = 'table'+tableNumber+(i-1)+j;
     }
   }
   data[tableNumber * 2]--;
